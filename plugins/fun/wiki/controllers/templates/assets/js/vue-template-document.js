@@ -111,6 +111,8 @@
         }
 
         makeSaveButton() {
+            const isCreate = Boolean(this.state?.initial?.isCreateAction);
+
             return {
                 type: 'button',
                 icon: 'icon-save-cloud',
@@ -120,12 +122,12 @@
                 tooltipHotkey: '⌃S, ⌘S',
                 command: 'form:onSave',
                 showBadge: false,
-                customData: {
+                customData: isCreate ? {} : {
                     request: {
                         data: { 'redirect': 0 }
                     }
                 }
-            }
+            };
         }
 
         makeDeleteButton() {

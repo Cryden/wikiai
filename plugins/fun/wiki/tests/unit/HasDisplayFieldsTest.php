@@ -39,4 +39,25 @@ class HasDisplayFieldsTest extends TestCase
         $article = new Article(['data' => ['foo' => 'bar']]);
         $this->assertEmpty($article->getDisplayData());
     }
+
+    public function testNodeTemplateKeepsFieldsAndDisplayFieldsVisible(): void
+    {
+        $template = new Template([
+            'type' => 'node'
+        ]);
+
+        $fields = (object) [
+            'fields' => (object) ['hidden' => false],
+            'display_fields' => (object) ['hidden' => false],
+            'slug' => (object) ['required' => false],
+            'is_nested' => (object) ['hidden' => false],
+        ];
+
+        $template->filterFields($fields);
+
+        $this->assertFalse($fields->fields->hidden);
+        $this->assertFalse($fields->display_fields->hidden);
+        $this->assertTrue($fields->slug->required);
+        $this->assertTrue($fields->is_nested->hidden);
+    }
 }

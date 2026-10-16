@@ -34,6 +34,10 @@ trait HasAncestryChain
      */
     public function getFullSlugPath(): string
     {
+        if (!empty($this->fullslug)) {
+            return $this->fullslug;
+        }
+
         $crumbs = $this->getBreadcrumbs();
         $slugs = array_column($crumbs, 'slug');
 

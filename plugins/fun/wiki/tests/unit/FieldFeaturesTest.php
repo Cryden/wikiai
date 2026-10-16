@@ -134,4 +134,25 @@ class FieldFeaturesTest extends \PluginTestCase
         $this->assertEquals('taglist', $relConfig['type']);
         $this->assertEquals('array', $relConfig['mode']);
     }
+
+    public function testNodeTemplateRequiresSlugInValidation(): void
+    {
+        $nodeTemplate = new Template([
+            'name' => 'Узел каталога',
+            'code' => 'catalog_node',
+            'type' => 'node',
+            'slug' => ''
+        ]);
+
+        try {
+            $nodeTemplate->validate();
+            $this->fail('Expected ModelException was not thrown');
+        } catch (\October\Rain\Database\ModelException $e) {
+            $this->assertTrue($nodeTemplate->errors()->has('slug'));
+            $this->assertEquals('Поле "Слаг узла" обязательно для заполнения.', $nodeTemplate->errors()->first('slug'));
+        }
+
+        $nodeTemplate->slug = 'catalog';
+        $this->assertTrue($nodeTemplate->validate());
+    }
 }

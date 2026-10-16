@@ -24,6 +24,10 @@ columns:
     slug:
         label: Slug
         searchable: true
+    fullslug:
+        label: 'Full Slug'
+        searchable: true
+        sortable: true
     status:
         label: Статус
         type: text

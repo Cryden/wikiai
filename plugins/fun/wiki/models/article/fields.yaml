@@ -48,10 +48,18 @@ tabs:
         slug@update:
             label: 'Слаг (URL)'
             type: text
-            span: full
+            span: left
             preset:
                 field: title
                 type: slug
+            tab: Контент
+
+        fullslug@update:
+            label: 'Полный путь (Full Slug)'
+            type: text
+            span: right
+            disabled: true
+            comment: 'Формируется автоматически на основе иерархии родителей'
             tab: Контент
 
         _section_content:

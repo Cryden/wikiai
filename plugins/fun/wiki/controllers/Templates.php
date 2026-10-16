@@ -138,6 +138,62 @@ class Templates extends Controller
         }
 
         $this->prepareVars();
+        $this->vars['initialState']['isCreateAction'] = true;
+    }
+
+    public function formCreateModelObject()
+    {
+        $model = new Template;
+
+        $type = post('Template.type')
+            ?? post('entry_type')
+            ?? post('EntryRecord.content_group')
+            ?? get('type');
+
+        if ($type && in_array($type, ['article', 'node', 'variant'], true)) {
+            $model->type = $type;
+        }
+
+        return $model;
+    }
+
+    public function formBeforeCreate($model)
+    {
+        $type = post('Template.type')
+            ?? post('entry_type')
+            ?? post('EntryRecord.content_group')
+            ?? post('type');
+
+        if ($type && in_array($type, ['article', 'node', 'variant'], true)) {
+            $model->type = $type;
+            $this->formSetSaveValue('type', $type);
+        }
+    }
+
+    public function formBeforeSave($model)
+    {
+        $type = post('Template.type')
+            ?? post('entry_type')
+            ?? post('EntryRecord.content_group')
+            ?? post('type');
+
+        if ($type && in_array($type, ['article', 'node', 'variant'], true)) {
+            $model->type = $type;
+            $this->formSetSaveValue('type', $type);
+        }
+    }
+
+    public function formGetRedirectUrl($context = null, $model = null): ?string
+    {
+        if (post('close')) {
+            return 'fun/wiki/templates';
+        }
+
+        if ($context === 'create' && $model) {
+            return 'fun/wiki/templates/update/' . $model->getKey();
+        }
+
+        return null;
     }
 
     public function update($recordId = null)
@@ -175,7 +231,10 @@ class Templates extends Controller
 
     public function makeInitialState($model = null): array
     {
-        $type = $model?->type ?? 'article';
+        $type = $model?->type
+            ?? post('Template.type')
+            ?? post('entry_type')
+            ?? 'article';
 
         return [
             'showEntryTypeSelector' => true,
@@ -184,7 +243,8 @@ class Templates extends Controller
                 'node'    => 'Узел',
                 'variant' => 'Вариант',
             ],
-            'contentGroup' => $type,
+            'contentGroup'   => $type,
+            'isCreateAction' => !$model || !$model->exists,
         ];
     }
 

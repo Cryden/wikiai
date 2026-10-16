@@ -81,7 +81,59 @@ class ArticleDynamicFieldsTest extends \PluginTestCase
         $bookArticle->save();
 
         $this->assertNotNull($bookArticle->id);
-        // Parent ID should be resolved from data['universe']
-        $this->assertEquals($universeArticle->id, $bookArticle->parent_id);
+        // Parent of Book article is automatically resolved to the intermediate structural node 'books'
+        $this->assertEquals('books', $bookArticle->parent?->slug);
+        $this->assertEquals($universeArticle->id, $bookArticle->parent?->parent_id);
+
+        // Verify fullslug generation with intermediate nodes included
+        $this->assertEquals('universes/lotr', $universeArticle->fullslug);
+        $this->assertEquals('universes/lotr/books/fotr', $bookArticle->fullslug);
+    }
+
+    public function testFullSlugCalculationAndSearch(): void
+    {
+        $template = Template::create([
+            'name' => 'General',
+            'code' => 'general'
+        ]);
+
+        // 1. Root article
+        $root = Article::create([
+            'title'       => 'Universes',
+            'slug'        => 'universes',
+            'template_id' => $template->id,
+        ]);
+        $this->assertEquals('universes', $root->fullslug);
+
+        // 2. Child article
+        $child = Article::create([
+            'title'       => 'Dune',
+            'slug'        => 'dune',
+            'parent_id'   => $root->id,
+            'template_id' => $template->id,
+        ]);
+        $this->assertEquals('universes/dune', $child->fullslug);
+
+        // 3. Grandchild article
+        $grandchild = Article::create([
+            'title'       => 'Paul Atreides',
+            'slug'        => 'paul',
+            'parent_id'   => $child->id,
+            'template_id' => $template->id,
+        ]);
+        $this->assertEquals('universes/dune/paul', $grandchild->fullslug);
+
+        // 4. Fast search via scopeByFullSlug
+        $found = Article::byFullSlug('universes/dune/paul')->first();
+        $this->assertNotNull($found);
+        $this->assertEquals($grandchild->id, $found->id);
+
+        // 5. Updating child slug cascades to grandchild fullslug
+        $child->slug = 'arrakis';
+        $child->save();
+
+        $this->assertEquals('universes/arrakis', $child->fullslug);
+        $grandchild->refresh();
+        $this->assertEquals('universes/arrakis/paul', $grandchild->fullslug);
     }
 }

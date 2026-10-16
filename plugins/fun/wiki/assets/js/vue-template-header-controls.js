@@ -56,10 +56,9 @@
             this.state.processing = true;
             this.state.toolbarDisabled = true;
 
-            const hiddenInput = document.getElementById('template-type-input');
-            if (hiddenInput) {
-                hiddenInput.value = entryType;
-            }
+            document.querySelectorAll('input[name="Template[type]"], #template-type-input').forEach(el => {
+                el.value = entryType;
+            });
 
             try {
                 await oc.request(targetElement, 'onChangeEntryType', {

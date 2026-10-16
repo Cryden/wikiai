@@ -44,8 +44,25 @@ class Template extends Model
 
     public $rules = [
         'name' => 'required',
-        'code' => 'required|unique:fun_wiki_templates,code'
+        'code' => 'required|unique:fun_wiki_templates,code',
+        'slug' => 'required_if:type,node',
     ];
+
+    public $customMessages = [
+        'slug.required'    => 'Поле "Слаг узла" обязательно для заполнения.',
+        'slug.required_if' => 'Поле "Слаг узла" обязательно для типа "Узел".',
+    ];
+
+    public $attributeNames = [
+        'slug' => 'Слаг узла',
+    ];
+
+    public function beforeValidate(): void
+    {
+        if (($this->type ?? 'article') === 'node') {
+            $this->rules['slug'] = 'required';
+        }
+    }
 
     public $hasMany = [
         'fields'   => [Field::class, 'key' => 'template_id', 'order' => 'sort_order asc'],
@@ -76,11 +93,8 @@ class Template extends Model
         $type = $this->type ?? 'article';
 
         if ($type === 'node') {
-            if (isset($fields->fields)) {
-                $fields->fields->hidden = true;
-            }
-            if (isset($fields->display_fields)) {
-                $fields->display_fields->hidden = true;
+            if (isset($fields->slug)) {
+                $fields->slug->required = true;
             }
             if (isset($fields->is_nested)) {
                 $fields->is_nested->hidden = true;

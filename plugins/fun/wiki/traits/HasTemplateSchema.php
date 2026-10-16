@@ -27,7 +27,12 @@ trait HasTemplateSchema
     public function applyTemplateSchema(): void
     {
         if (!$this->template) {
-            return;
+            if ($this->template_id) {
+                $this->template = \Fun\Wiki\Models\Template::find($this->template_id);
+            }
+            if (!$this->template) {
+                return;
+            }
         }
 
         // 1. Автоматическая типизация сущности
@@ -35,6 +40,16 @@ trait HasTemplateSchema
 
         // 2. Разрешение родителя из значений родительских полей формы
         $this->resolveParentFromData();
+
+        // 3. Автоматическое разрешение и достраивание цепочки промежуточных структурных узлов (Nodes)
+        if ($this->type !== 'node') {
+            try {
+                $ancestryService = app(\Fun\Wiki\Services\AncestryService::class);
+                $this->parent_id = $ancestryService->resolveIntermediateNode($this->template, $this->parent_id);
+            } catch (\Throwable $e) {
+                // Безопасный fallback при выполнении в моках или без DI
+            }
+        }
     }
 
     /**

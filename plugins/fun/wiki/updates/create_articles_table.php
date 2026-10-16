@@ -12,6 +12,7 @@ class CreateArticlesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('slug')->index();
+            $table->string('fullslug')->nullable()->index();
             
             $table->integer('template_id')->unsigned()->index();
             
