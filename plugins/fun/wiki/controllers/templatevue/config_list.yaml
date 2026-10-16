@@ -1,0 +1,17 @@
+title: 'Шаблоны (Vue)'
+modelClass: Fun\Wiki\Models\Template
+list: $/fun/wiki/models/template/columns.yaml
+recordUrl: fun/wiki/templatevue/update/:id
+noRecordsMessage: 'Шаблоны пока не созданы'
+recordsPerPage: 50
+showCheckboxes: true
+defaultSort:
+    column: nest_left
+    direction: asc
+structure:
+    showTree: true
+    treeExpanded: true
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'Поиск шаблонов...'

@@ -1,0 +1,25 @@
+columns:
+    label:
+        label: Ярлык поля
+        searchable: true
+        sortable: true
+    name:
+        label: Имя поля (код)
+        searchable: true
+        sortable: true
+    type_name:
+        label: Тип данных
+        type: text
+        sortable: false
+    is_mandatory:
+        label: Обязательно
+        type: switch
+    is_parent_field:
+        label: Родительское
+        type: switch
+    is_inherited:
+        label: Унаследовано
+        type: switch
+    depends_on_field:
+        label: Depends On
+        type: text

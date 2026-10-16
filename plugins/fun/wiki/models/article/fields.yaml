@@ -1,0 +1,67 @@
+fields:
+    title:
+        label: 'Заголовок статьи'
+        span: full
+        cssClass: primary-title-field
+        required: true
+
+    title@create:
+        autoFocus: true
+        placeholder: 'Заголовок статьи'
+        cssClass: primary-title-field
+
+tabs:
+    icons:
+        Контент: icon-file-text
+        Поля данных: icon-list-ul
+        Цепочка предков: icon-sitemap
+
+    fields:
+        template@create:
+            label: 'Шаблон статьи'
+            type: relation
+            select: name
+            emptyOption: '-- Выберите шаблон --'
+            span: left
+            required: true
+            tab: Контент
+            changeHandler: onRefresh
+
+        template@update:
+            label: 'Шаблон статьи'
+            type: relation
+            select: name
+            span: left
+            disabled: true
+            tab: Контент
+
+        status:
+            label: 'Статус'
+            type: dropdown
+            span: right
+            options:
+                published: 'Опубликовано'
+                draft: 'Черновик'
+                skeleton: 'Каркас / Заготовка'
+            tab: Контент
+
+        slug@update:
+            label: 'Слаг (URL)'
+            type: text
+            span: full
+            preset:
+                field: title
+                type: slug
+            tab: Контент
+
+        _section_content:
+            label: 'Основное содержимое'
+            type: section
+            tab: Контент
+
+        content:
+            label: 'Тело статьи (Markdown)'
+            type: markdown
+            size: huge
+            span: full
+            tab: Контент

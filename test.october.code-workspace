@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../fun-wiki.october"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"**/themes/**/*.htm": "october-tpl",
+			"**/plugins/**/components/**/*.htm": "october-tpl",
+			"**/plugins/**/views/**/*.htm": "october-tpl",
+			"**/plugins/**/controllers/**/*.htm": "php"
+		},
+		"emmet.includeLanguages": {
+			"october-tpl": "html"
+		}
+	}
+}

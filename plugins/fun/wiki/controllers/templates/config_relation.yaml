@@ -1,0 +1,12 @@
+fields:
+    label: Поле шаблона
+    view:
+        list: $/fun/wiki/models/field/columns.yaml
+        toolbarButtons: create|delete
+        defaultSort:
+            column: sort_order
+            direction: asc
+    manage:
+        form: $/fun/wiki/models/field/fields.yaml
+        showSearch: true
+        recordsPerPage: 25

@@ -1,0 +1,10 @@
+/* TemplateEditor helpers */
+.control-tabs.primary-tabs .nav-tabs > li > a {
+    cursor: pointer;
+}
+
+.btn-group-xs > .btn, .btn-xs {
+    padding: 0.15rem 0.4rem;
+    font-size: 0.75rem;
+    border-radius: 0.2rem;
+}

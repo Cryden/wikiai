@@ -1,0 +1,31 @@
+columns:
+    # id:
+    #     label: ID
+    #     searchable: true
+    #     sortable: true
+    name:
+        label: Имя шаблона
+        searchable: true
+        sortable: true
+    code:
+        label: Код (slug)
+        searchable: true
+        sortable: true
+    type:
+        label: Тип
+        type: text
+        sortable: true
+    parent:
+        label: Родительский шаблон
+        relation: parent
+        select: name
+        sortable: true
+    is_mandatory:
+        label: Обязательный
+        type: switch
+    is_auto_create:
+        label: Автосоздание
+        type: switch
+    is_nested:
+        label: Вложенный
+        type: switch

@@ -1,0 +1,103 @@
+fields:
+    name:
+        label: 'Имя шаблона'
+        span: full
+        cssClass: primary-title-field
+        required: true
+
+    name@create:
+        autoFocus: true
+        placeholder: 'Имя шаблона'
+        cssClass: primary-title-field
+
+tabs:
+    icons:
+        Настройки: icon-settings
+        Поля: icon-components
+        Отображение: icon-window-split
+        Информация: icon-callout-info
+
+    fields:
+        code:
+            label: 'Код шаблона (уникальный)'
+            type: text
+            span: left
+            required: true
+            comment: 'Код конвертируется в snake_case'
+            tab: Настройки
+
+        parent:
+            label: 'Родительский шаблон'
+            type: relation
+            select: name
+            emptyOption: '--ROOT--'
+            span: right
+            tab: Настройки
+            changeHandler: onUpdateFields
+
+        slug:
+            label: 'Слаг узла (Node slug)'
+            type: text
+            span: left
+            comment: 'Фиксированный путь (например, books, characters)'
+            tab: Настройки
+
+        is_mandatory:
+            label: 'Обязательный'
+            type: switch
+            comment: 'Записи с данным шаблоном обязательны для построения иерархии'
+            span: left
+            tab: Настройки
+            changeHandler: onUpdateFields
+
+        is_auto_create:
+            label: 'Создавать автоматически'
+            type: switch
+            comment: 'Разрешено создавать родителя прямо в поле на лету'
+            span: left
+            tab: Настройки
+            changeHandler: onUpdateFields
+
+        is_nested:
+            label: 'Вложенный'
+            type: switch
+            comment: 'Записи с данным шаблоном могут иметь самовложенность'
+            span: left
+            tab: Настройки
+            changeHandler: onUpdateFields
+
+        fields:
+            span: adaptive
+            type: relation
+            context: update
+            tab: Поля
+            controller:
+                label: 'Поля'
+                span: adaptive
+                showSorting: true
+                externalToolbarAppState: toolbarExtensionPoint
+                view:
+                    list: $/fun/wiki/models/field/columns.yaml
+                    toolbarButtons: create_field|delete
+                    showSetup: true
+                    structure:
+                        showTree: false
+                        showReorder: true
+                        showSorting: false
+                    recordsPerPage: 20
+                manage:
+                    form: $/fun/wiki/models/field/fields.yaml
+
+        display_fields@update:
+            span: full
+            type: wikix_meta_fields
+            tab: Отображение
+            from_label: Не отображать
+            to_label: Отображать
+            dependsOn: fields
+
+        description:
+            label: 'Описание шаблона'
+            type: textarea
+            size: small
+            tab: Информация

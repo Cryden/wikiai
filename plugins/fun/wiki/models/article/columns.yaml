@@ -1,0 +1,33 @@
+columns:
+    id:
+        label: ID
+        searchable: true
+        sortable: true
+    title:
+        label: Заголовок
+        searchable: true
+        sortable: true
+    type:
+        label: Тип
+        type: text
+        sortable: true
+    template:
+        label: Шаблон
+        relation: template
+        select: name
+        sortable: true
+    parent:
+        label: Родитель
+        relation: parent
+        select: title
+        sortable: true
+    slug:
+        label: Slug
+        searchable: true
+    status:
+        label: Статус
+        type: text
+    updated_at:
+        label: Обновлено
+        type: datetime
+        sortable: true

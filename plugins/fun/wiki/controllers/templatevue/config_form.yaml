@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Template Vue
+
+# Model Form Field configuration
+form: $/fun/wiki/models/template/fields.yaml
+
+# Model Class name
+modelClass: Fun\Wiki\Models\Template
+
+# Default redirect location
+defaultRedirect: fun/wiki/templatevue
+
+# Create page
+create:
+    title: backend::lang.form.create_title
+    redirect: fun/wiki/templatevue/update/:id
+    redirectClose: fun/wiki/templatevue
+
+# Update page
+update:
+    title: backend::lang.form.update_title
+    redirect: fun/wiki/templatevue
+    redirectClose: fun/wiki/templatevue
+
+# Preview page
+preview:
+    title: backend::lang.form.preview_title

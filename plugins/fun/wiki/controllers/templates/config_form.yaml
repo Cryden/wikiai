@@ -1,0 +1,10 @@
+name: Шаблон
+modelClass: Fun\Wiki\Models\Template
+form: $/fun/wiki/models/template/fields.yaml
+defaultRedirect: fun/wiki/templates
+create:
+    redirect: 'fun/wiki/templates/update/:id'
+    redirectClose: fun/wiki/templates
+update:
+    redirect: fun/wiki/templates
+    redirectClose: fun/wiki/templates

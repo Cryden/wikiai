@@ -1,0 +1,13 @@
+title: Статьи базы знаний
+modelClass: Fun\Wiki\Models\Article
+list: $/fun/wiki/models/article/columns.yaml
+recordUrl: fun/wiki/articles/update/:id
+noRecordsMessage: 'Статьи пока не созданы'
+recordsPerPage: 50
+structure:
+    showTree: true
+    treeExpanded: true
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'Поиск статей...'

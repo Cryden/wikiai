@@ -1,0 +1,29 @@
+<div data-control="toolbar">
+    <a
+        href="<?= Backend::url('fun/wiki/templatevue/create') ?>"
+        class="btn btn-primary oc-icon-plus">
+        Создать шаблон (Vue)
+    </a>
+
+    <div class="btn-group">
+        <a
+            href="<?= Backend::url('fun/wiki/templatevue/export') ?>"
+            class="btn btn-secondary oc-icon-download">
+            Экспорт JSON
+        </a>
+        <button
+            type="button"
+            class="btn btn-secondary oc-icon-upload"
+            data-control="popup"
+            data-handler="onLoadImportPopup">
+            Импорт JSON
+        </button>
+        <button
+            type="button"
+            class="btn btn-secondary oc-icon-sitemap"
+            data-request="onResetStructure"
+            data-request-confirm="Вы уверены, что хотите перестроить дерево шаблонов и обновить родительские связи?">
+            Перестроить структуру
+        </button>
+    </div>
+</div>

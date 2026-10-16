@@ -1,0 +1,120 @@
+fields:
+    label:
+        label: 'Ярлык поля'
+        type: text
+        span: left
+        required: true
+        comment: 'Название поля для пользователя (например: Население)'
+
+    name:
+        label: 'Имя поля (код)'
+        type: text
+        span: right
+        required: true
+        comment: 'Системный код (например: population)'
+        preset:
+            field: label
+            type: slug
+
+    type:
+        label: 'Тип данных'
+        type: dropdown
+        options: getTypeOptions
+        span: left
+        required: true
+        default: text
+
+    is_mandatory:
+        label: 'Обязательно для заполнения'
+        type: switch
+        span: right
+
+    is_global:
+        label: 'Глобальное поле'
+        type: switch
+        span: left
+        comment: 'Поле автоматически наследуется всеми дочерними шаблонами в иерархии'
+
+    # --- Настройки Связи (Relation) ---
+    config[target_template]:
+        label: 'Связанный шаблон'
+        type: dropdown
+        options: getTemplateOptions
+        emptyOption: '-- Выберите шаблон --'
+        span: left
+        comment: 'Шаблон сущностей, на которые ссылается данное поле'
+        trigger:
+            action: show
+            field: type
+            condition: value[relation] || value[parent]
+
+    config[is_multiple]:
+        label: 'Множественный выбор'
+        type: switch
+        span: right
+        comment: 'Разрешить выбирать несколько связанных записей или файлов'
+        trigger:
+            action: show
+            field: type
+            condition: value[relation] || value[file] || value[tags]
+
+    config[is_auto_create]:
+        label: 'Создавать на лету'
+        type: switch
+        span: right
+        comment: 'Разрешить создавать новую запись или тег прямо из формы статьи'
+        trigger:
+            action: show
+            field: type
+            condition: value[parent] || value[relation] || value[tags]
+
+    # --- Настройки Изображений (Image) ---
+    config[as_gallery]:
+        label: 'Галерея'
+        type: switch
+        span: left
+        comment: 'Разрешить прикрепление множественных изображений'
+        trigger:
+            action: show
+            field: type
+            condition: value[image]
+
+    config[as_cover]:
+        label: 'Использовать как обложку'
+        type: switch
+        span: right
+        comment: 'Основное изображение отображается в карточке сущности'
+        trigger:
+            action: show
+            field: type
+            condition: value[image]
+
+    # --- Настройки Тегов (Tags) ---
+    config[field_group_name]:
+        label: 'Группа тегов'
+        type: text
+        span: left
+        comment: 'Категория / группа тегов (например: Страны, Персоналии, Жанры)'
+        trigger:
+            action: show
+            field: type
+            condition: value[tags]
+
+    # --- Настройки триггеров видимости (Условные поля) ---
+    depends_on_field:
+        label: 'Зависимость от поля (Trigger)'
+        type: dropdown
+        options: getAvailableDependsOnFields
+        emptyOption: '-- Без зависимости --'
+        span: left
+        comment: 'Поле текущего шаблона, от которого зависит видимость данного поля'
+
+    depends_on_value:
+        label: 'Значение для активации'
+        type: text
+        span: right
+        comment: 'Значение поля для показа (например: checked, 1, или определенный ID)'
+        trigger:
+            action: show
+            field: depends_on_field
+            condition: value

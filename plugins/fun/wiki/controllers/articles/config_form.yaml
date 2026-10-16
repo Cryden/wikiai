@@ -1,0 +1,10 @@
+name: Статья
+modelClass: Fun\Wiki\Models\Article
+form: $/fun/wiki/models/article/fields.yaml
+defaultRedirect: fun/wiki/articles
+create:
+    redirect: 'fun/wiki/articles/update/:id'
+    redirectClose: fun/wiki/articles
+update:
+    redirect: fun/wiki/articles
+    redirectClose: fun/wiki/articles
